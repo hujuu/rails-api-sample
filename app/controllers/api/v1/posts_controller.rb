@@ -1,6 +1,6 @@
 class Api::V1::PostsController < ApplicationController
 	def index
-		posts = Post.all.order(created_at: :desc)
+		posts = Post.order(created_at: :desc).limit(params[:limit])
 		posts_array = posts.map do |post|
 			{
 				id: post.id,
