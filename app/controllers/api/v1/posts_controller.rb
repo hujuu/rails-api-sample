@@ -1,7 +1,14 @@
 class Api::V1::PostsController < ApplicationController
 	def index
 		posts = Post.all.order(created_at: :desc)
-		render json: posts
+		posts_array = posts.map do |post|
+			{
+				id: post.id,
+				content: post.content,
+				tags: post.tags.map {|tag| {id: tag.id, name: tag.name}}
+			}
+		end
+		render json: posts_array
 	end
 	
 	def create
