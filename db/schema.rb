@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_30_121954) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_31_100134) do
   create_table "foods", force: :cascade do |t|
     t.integer "restaurant_id", null: false
     t.string "name", null: false
@@ -40,6 +40,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_121954) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "post_tags", force: :cascade do |t|
+    t.integer "post_id", null: false
+    t.integer "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_post_tags_on_post_id"
+    t.index ["tag_id"], name: "index_post_tags_on_tag_id"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "restaurants", force: :cascade do |t|
     t.string "name", null: false
     t.integer "fee", default: 0, null: false
@@ -48,8 +63,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_121954) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "foods", "restaurants"
   add_foreign_key "line_foods", "foods"
   add_foreign_key "line_foods", "orders"
   add_foreign_key "line_foods", "restaurants"
+  add_foreign_key "post_tags", "posts"
+  add_foreign_key "post_tags", "tags"
 end
