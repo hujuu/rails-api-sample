@@ -1,4 +1,9 @@
 class Api::V1::PostsController < ApplicationController
+	def index
+		posts = Post.all.order(created_at: :desc)
+		render json: posts
+	end
+	
 	def create
 		post = Post.new(content: params[:content])
 	# タグ入力、文字列を半角スペース区切りで入力することで配列に格納
