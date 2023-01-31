@@ -9,6 +9,16 @@ module Api
 		  restaurants: restaurants
 		}, status: :ok
 	  end
+	  
+	  def show
+		  restaurant = Restaurant.find(params[:id])
+		  foods = restaurant.foods
+		  
+		  render json: {
+			  restaurants: restaurant,
+			  foods: foods
+		  }, status: :ok
+	  end
 	end
   end
 end
