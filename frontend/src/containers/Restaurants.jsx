@@ -1,22 +1,33 @@
-// --- useReducerを追加 ---
 import React, { Fragment, useReducer, useEffect } from 'react';
 import styled from 'styled-components';
+// --- ここから追加 ---
+import { Link } from "react-router-dom";
+// --- ここまで追加 ---
+// --- ここから追加 ---
+// components
+import Skeleton from '@mui/material/Skeleton';
 
 // apis
 import { fetchRestaurants } from '../apis/restaurants';
 
-// --- ここから追加 ---
 // reducers
 import {
     initialState,
     restaurantsActionTypes,
     restaurantsReducer,
 } from '../reducers/restaurants';
+
+// --- ここから追加 ---
+// constants
+import { REQUEST_STATE } from '../constants';
 // --- ここまで追加 ---
 
 // images
 import MainLogo from '../images/logo.png';
 import MainCoverImage from '../images/main-cover-image.png';
+// --- ここから追加 ---
+import RestaurantImage from '../images/restaurant-image.jpg';
+// --- ここまで追加 ---
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -36,8 +47,35 @@ const MainCover = styled.img`
   height: 600px;
 `;
 
+// --- ここから追加 ---
+const RestaurantsContentsList = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 150px;
+`;
+
+const RestaurantsContentWrapper = styled.div`
+  width: 450px;
+  height: 300px;
+  padding: 48px;
+`;
+
+const RestaurantsImageNode = styled.img`
+  width: 100%;
+`;
+
+const MainText = styled.p`
+  color: black;
+  font-size: 18px;
+`;
+
+const SubText = styled.p`
+  color: black;
+  font-size: 12px;
+`;
+// --- ここまで追加 ---
+
 export const Restaurants = () => {
-    // --- ここから修正 ---
     const [state, dispatch] = useReducer(restaurantsReducer, initialState);
 
     useEffect(() => {
@@ -52,7 +90,6 @@ export const Restaurants = () => {
                 })
             )
     }, [])
-    // --- ここまで修正 ---
 
     return (
         <Fragment>
@@ -63,13 +100,26 @@ export const Restaurants = () => {
                 <MainCover src={MainCoverImage} alt="main cover" />
             </MainCoverImageWrapper>
             // --- ここから追加 ---
-            {
-                state.restaurantsList.map(restaurant =>
-                    <div key={restaurant.id}>
-                        {restaurant.name}
-                    </div>
-                )
-            }
+            <RestaurantsContentsList>
+                {
+                    state.fetchState === REQUEST_STATE.LOADING ?
+                        <Fragment>
+                            <Skeleton variant="rect" width={450} height={300} />
+                            <Skeleton variant="rect" width={450} height={300} />
+                            <Skeleton variant="rect" width={450} height={300} />
+                        </Fragment>
+                        :
+                        state.restaurantsList.map(item =>
+                            <Link to={`/restaurants/${item.id}/foods`} key={item.id} style={{ textDecoration: 'none' }}>
+                                <RestaurantsContentWrapper>
+                                    <RestaurantsImageNode src={RestaurantImage} />
+                                    <MainText>{item.name}</MainText>
+                                    <SubText>{`配送料：${item.fee}円 ${item.time_required}分`}</SubText>
+                                </RestaurantsContentWrapper>
+                            </Link>
+                        )
+                }
+            </RestaurantsContentsList>
             // --- ここまで追加 ---
         </Fragment>
     )
