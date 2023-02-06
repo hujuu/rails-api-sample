@@ -1,6 +1,5 @@
 import React, { Fragment, useReducer, useEffect } from 'react';
 import styled from 'styled-components';
-// --- ここから追加 ---
 import { Link } from "react-router-dom";
 // components
 import Skeleton from '@mui/material/Skeleton';
