@@ -2,14 +2,9 @@ import React, { Fragment, useReducer, useEffect } from 'react';
 import styled from 'styled-components';
 // --- ここから追加 ---
 import { Link } from "react-router-dom";
-// --- ここまで追加 ---
-// --- ここから追加 ---
 // components
 import Skeleton from '@mui/material/Skeleton';
-
-// apis
 import { fetchRestaurants } from '../apis/restaurants';
-
 // reducers
 import {
     initialState,
@@ -17,11 +12,8 @@ import {
     restaurantsReducer,
 } from '../reducers/restaurants';
 
-// --- ここから追加 ---
 // constants
 import { REQUEST_STATE } from '../constants';
-// --- ここまで追加 ---
-
 // images
 import MainLogo from '../images/logo.png';
 import MainCoverImage from '../images/main-cover-image.png';
@@ -73,7 +65,6 @@ const SubText = styled.p`
   color: black;
   font-size: 12px;
 `;
-// --- ここまで追加 ---
 
 export const Restaurants = () => {
     const [state, dispatch] = useReducer(restaurantsReducer, initialState);
