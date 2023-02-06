@@ -10,7 +10,6 @@ import {
     restaurantsActionTypes,
     restaurantsReducer,
 } from '../reducers/restaurants';
-
 // constants
 import { REQUEST_STATE } from '../constants';
 // images
